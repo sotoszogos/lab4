@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ThrowRigidbody : MonoBehaviour {
     Rigidbody rb;
-    public Vector3 fireVelocity = new Vector3(10, 8, 0);
+    float xMove, yMove;
+    public float speed = 7;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -15,9 +16,18 @@ public class ThrowRigidbody : MonoBehaviour {
         //whenever the user presses the fire button
         //the fireVelocity (editable thorugh Unity Editor)
         //is assigned to the rigidbody
-        if (Input.GetButtonDown("Fire1"))
-            rb.velocity = fireVelocity;
+        if (Input.GetButton("Fire1"))
+        {
+            rb.velocity = new Vector3(0, 10, 0);
+        }
+        xMove = Input.GetAxis("Horizontal");
+        yMove = Input.GetAxis("Vertical");
 
         //can be used as a projectile in Angry Birds-type worlds.
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector3(xMove * speed, rb.velocity.y, yMove * speed);
     }
 }
